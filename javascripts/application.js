@@ -51,7 +51,7 @@ function megaplaya_callback(event_name, args) {
 }
 
 function load_urban_videos(){
-  var url = 'http://staging.urbandictionary.com/iphone/search/videos?callback=load_urban_videos_callback&random=1';
+  var url = 'http://www.urbandictionary.com/iphone/search/videos?callback=load_urban_videos_callback&random=1';
   var script = document.createElement('script');
   script.setAttribute('type', 'text/javascript');
   script.setAttribute('src', url);
