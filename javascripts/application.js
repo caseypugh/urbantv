@@ -92,8 +92,22 @@ function load_urban_videos_callback(resp){
   });
   debug(">> callback(): loading "+urls.length+" videos...");
 
-  $('#player').show();
-  $('#player').css('z-index', 10);
+  // 1st: show word, hide other controls
+  $('#overlay').show();
+  $('#sidebar').hide();
+
+  // 2nd: show definition slideout
+  $('#overlay').fadeOut('slow');
+  // TODO...
+
+  // 3rd: hide controls
+  var hide_controls_timer = setTimeout(function(){
+
+    // TODO slide sidebar left
+
+    $('#player').show();
+    $('#player').css('z-index', 10);
+  }, 3000);
 
   urls = shuffle(urls);
   return megaplaya.api_playQueue(urls);
