@@ -1,13 +1,32 @@
-// globals
+
 var megaplaya = false;
 var search_visible = true;
 var keyboard_disabled = false;
 
-// parse any hashbangs and use that as search right away
+
 $(document).ready(function(){
   load_player();
 });
 
+// Helpers
+function debug(string){
+  try {
+    if(arguments.length > 1) {
+      console.log(arguments);
+    }
+    else {
+      console.log(string);
+    }
+  } catch(e) { console.log('uh oh'); }
+}
+
+function shuffle(v){
+  for(var j, x, i = v.length; i; j = parseInt(Math.random() * i, 0), x = v[--i], v[i] = v[j], v[j] = x);
+  return v;
+}
+
+
+// VHX Megaplaya scaffolding
 function load_player(){
   $('#player').flash({
     swf: 'http://vhx.tv/embed/megaplaya',
@@ -39,6 +58,10 @@ function megaplaya_addListeners(){
 }
 
 function megaplaya_callback(event_name, args) {
+
+  // TODO just look for and call functions like "#{event_name}_callback" if defined
+  // all megaplaya apps could work like this, and the above scaffolding be builtin
+
   switch (event_name) {
     case 'onVideoLoad':
       var video = megaplaya.api_getCurrentVideo();
@@ -50,6 +73,8 @@ function megaplaya_callback(event_name, args) {
   }
 }
 
+
+// Urban Dictionary data loaders
 function load_urban_videos(){
   var url = 'http://www.urbandictionary.com/iphone/search/videos?callback=load_urban_videos_callback&random=1';
   var script = document.createElement('script');
@@ -72,25 +97,4 @@ function load_urban_videos_callback(resp){
 
   urls = shuffle(urls);
   return megaplaya.api_playQueue(urls);
-}
-
-function handle_onvideoload(){
-  debug('hi')
-  debug('onvideoload', arguments);
-}
-
-function debug(string){
-  try {
-    if(arguments.length > 1) {
-      console.log(arguments);
-    }
-    else {
-      console.log(string);
-    }
-  } catch(e) { console.log('uh oh'); }
-}
-
-function shuffle(v){
-  for(var j, x, i = v.length; i; j = parseInt(Math.random() * i, 0), x = v[--i], v[i] = v[j], v[j] = x);
-  return v;
 }
